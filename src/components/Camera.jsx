@@ -1,8 +1,21 @@
-import React from 'react'
+import React , { useState } from 'react';
 import Webcam from 'react-webcam'
 import { makeStyles} from '@material-ui/core/styles';
 import {Container ,IconButton} from '@material-ui/core';
 import CameraIcon from '@material-ui/icons/Camera';
+
+const WebcamCapture = () => {
+    
+    const [image,setImage]=useState('');
+    const webcamRef = React.useRef(null);
+
+    
+    const capture = React.useCallback(
+        () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        setImage(imageSrc)
+        });
+
 
 const useStyles = makeStyles((theme)=> ({
 container: {
@@ -30,22 +43,41 @@ container: {
 }))
 
 
-function Camera ()  {
     const classes = useStyles();
     return (
            
            <Container className={classes.container}>
               
-               <Webcam/>
-               <div >
-               <IconButton >
-               <CameraIcon color="primary" style={{ fontSize: 40}}/>
-               </IconButton>
-               </div>
+              {image === '' ? <Webcam
+                    audio={false}
+                   
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                   
+                    
+                /> : <img src={image} />}
+            <div>
+                {image !== '' ?
+                    <IconButton  style={{ fontSize: 40}} onClick={(e) => {
+                        e.preventDefault();
+                        setImage('')
+                    }}
+                        >
+                            <CameraIcon style={{ fontSize: 40}}/>
+                       </IconButton > :
+                    <IconButton   onClick={(e) => {
+                        e.preventDefault();
+                        capture();
+                    }}
+                        >
+                            <CameraIcon color="primary" style={{ fontSize: 40}}/>
+                        </IconButton>
+                }
+            </div>
                
            </Container>
        
     )
-}
+};
 
-export default Camera
+export default WebcamCapture;
