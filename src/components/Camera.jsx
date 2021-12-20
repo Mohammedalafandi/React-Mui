@@ -58,12 +58,12 @@ container: {
                 /> : <img src={image} />}
             <div>
                 {image !== '' ?
-                    <IconButton  style={{ fontSize: 40}} onClick={(e) => {
+                    <IconButton  style={{ fontSize: 39}} onClick={(e) => {
                         e.preventDefault();
                         setImage('')
                     }}
                         >
-                            <CameraIcon style={{ fontSize: 40}}/>
+                            <CameraIcon style={{ fontSize: 39}}/>
                        </IconButton > :
                     <IconButton   onClick={(e) => {
                         e.preventDefault();
